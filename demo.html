@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Feedback Widget Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #666;
+        }
+
+        .demo-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: 2px dashed #dee2e6;
+        }
+
+        .demo-section h3 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .config-section h4 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .config-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .config-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #666;
+            border-top: 1px solid #dee2e6;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>💬 Anonymous Micro Feedback Widget</h1>
+        <p>Collect actionable user feedback without compromising privacy</p>
+    </div>
+
+    <div class="content">
+        <h2>✨ Features</h2>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Anonymous by Design</h3>
+                <p>No user tracking, IP logging, or personal data collection</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📝</div>
+                <h3>One-Shot Feedback</h3>
+                <p>Users can only submit feedback once per page load</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Optional Follow-up</h3>
+                <p>Allow users to provide additional details if they choose</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <h3>Moderation Queue</h3>
+                <p>Review and moderate feedback before public viewing</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📧</div>
+                <h3>Email Notifications</h3>
+                <p>Get notified when new feedback is submitted</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h3>Customizable</h3>
+                <p>Configure position, theme, and messaging</p>
+            </div>
+        </div>
+
+        <h2>🚀 Quick Setup</h2>
+
+        <div class="demo-section">
+            <h3>Add this script to your website:</h3>
+            <div class="code-block">
+&lt;script src="https://your-domain.com/widget.js"&gt;&lt;/script&gt;
+            </div>
+        </div>
+
+        <h2>⚙️ Configuration</h2>
+
+        <div class="config-section">
+            <h4>Optional Configuration (before the script tag):</h4>
+            <div class="code-block">
+&lt;script&gt;
+  window.AnonymousFeedbackConfig = {
+    apiUrl: 'https://your-api-domain.com',
+    widgetId: 'your-widget-id',
+    position: 'bottom-right', // 'bottom-right', 'bottom-left', 'top-right', 'top-left'
+    theme: 'light', // 'light' or 'dark'
+    triggerText: '💬 Feedback',
+    thankYouText: 'Thanks for your feedback!',
+    followUpEnabled: true,
+    followUpQuestion: 'Would you like to elaborate?'
+  };
+&lt;/script&gt;
+&lt;script src="https://your-domain.com/widget.js"&gt;&lt;/script&gt;
+            </div>
+        </div>
+
+        <div class="config-section">
+            <h4>Configuration Options:</h4>
+            <div class="config-grid">
+                <div class="config-item">
+                    <strong>apiUrl</strong>
+                    Your backend API URL
+                </div>
+                <div class="config-item">
+                    <strong>widgetId</strong>
+                    Unique identifier for your widget
+                </div>
+                <div class="config-item">
+                    <strong>position</strong>
+                    Widget position on screen
+                </div>
+                <div class="config-item">
+                    <strong>theme</strong>
+                    Light or dark theme
+                </div>
+                <div class="config-item">
+                    <strong>triggerText</strong>
+                    Text shown on the trigger button
+                </div>
+                <div class="config-item">
+                    <strong>thankYouText</strong>
+                    Message shown after submission
+                </div>
+                <div class="config-item">
+                    <strong>followUpEnabled</strong>
+                    Enable/disable follow-up questions
+                </div>
+                <div class="config-item">
+                    <strong>followUpQuestion</strong>
+                    Placeholder text for follow-up
+                </div>
+            </div>
+        </div>
+
+        <h2>📊 Admin Dashboard</h2>
+        <p>Access your admin dashboard at: <code>https://your-domain.com/admin</code></p>
+        <p>Features include:</p>
+        <ul>
+            <li>📋 View all feedback submissions</li>
+            <li>✅ Moderate and approve feedback</li>
+            <li>📧 Configure email notifications</li>
+            <li>📈 View statistics and analytics</li>
+            <li>🔍 Filter and search feedback</li>
+        </ul>
+
+        <h2>🛠️ Backend Setup</h2>
+        <p>The widget requires a backend API to store feedback. The backend includes:</p>
+        <ul>
+            <li>RESTful API endpoints</li>
+            <li>JSON file-based storage (easily replaceable with database)</li>
+            <li>Email notification system</li>
+            <li>CORS support for cross-origin requests</li>
+            <li>Rate limiting and input validation</li>
+        </ul>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="https://github.com/prady4the4bady/AnonymousFeedbackWidget" class="btn" style="margin-right: 10px;">View on GitHub</a>
+            <a href="./admin/" class="btn">Open Admin Demo</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Built with ❤️ for better user feedback collection</p>
+        <p><small>Anonymous Micro Feedback Widget - Open Source</small></p>
+    </div>
+
+    <!-- Demo Widget (comment out in production) -->
+    <script>
+        // Demo configuration
+        window.AnonymousFeedbackConfig = {
+            apiUrl: 'http://localhost:3002',
+            widgetId: 'demo',
+            position: 'bottom-right',
+            theme: 'light',
+            triggerText: '💬 Try the Demo',
+            thankYouText: 'Thanks for trying the demo!',
+            followUpEnabled: true,
+            followUpQuestion: 'Any additional thoughts?'
+        };
+    </script>
+    <script src="./frontend/widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "anonymous-feedback-widget",
+  "version": "1.0.0",
+  "description": "Embeddable anonymous feedback widget",
+  "main": "widget.js",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development --watch"
+  },
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "keywords": ["feedback", "widget", "anonymous", "embeddable"],
+  "author": "prady4the4bady",
+  "license": "MIT"
+}

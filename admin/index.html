@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Feedback Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .feedback-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .feedback-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s ease;
+        }
+
+        .feedback-item:hover {
+            background: #f8f9fa;
+        }
+
+        .feedback-item:last-child {
+            border-bottom: none;
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .feedback-meta {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .feedback-message {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .feedback-followup {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            border-left: 3px solid #3498db;
+        }
+
+        .feedback-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-moderated {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-archived {
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .settings-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .settings-panel h2 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .settings-form {
+            display: grid;
+            gap: 15px;
+            max-width: 500px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .feedback-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Anonymous Feedback Admin</h1>
+            <div id="refresh-btn" class="btn btn-primary">Refresh</div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-feedback">0</div>
+                <div class="stat-label">Total Feedback</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pending-feedback">0</div>
+                <div class="stat-label">Pending Review</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="moderated-feedback">0</div>
+                <div class="stat-label">Moderated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="today-feedback">0</div>
+                <div class="stat-label">Today</div>
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <h2>Settings</h2>
+            <form class="settings-form" id="settings-form">
+                <div class="form-group">
+                    <label for="notification-email">Notification Email:</label>
+                    <input type="email" id="notification-email" placeholder="admin@example.com">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </form>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter">
+                    <option value="">All</option>
+                    <option value="false">Pending</option>
+                    <option value="true">Moderated</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="page-filter">Page:</label>
+                <input type="text" id="page-filter" placeholder="Filter by page URL">
+            </div>
+            <div class="filter-group">
+                <label for="search-filter">Search:</label>
+                <input type="text" id="search-filter" placeholder="Search feedback">
+            </div>
+        </div>
+
+        <div id="error-message" class="error" style="display: none;"></div>
+
+        <div id="loading" class="loading">Loading feedback...</div>
+
+        <div id="feedback-list" class="feedback-list" style="display: none;">
+            <!-- Feedback items will be inserted here -->
+        </div>
+
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <h3>No feedback yet</h3>
+            <p>Feedback from your users will appear here once they start using the widget.</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3002';
+
+        let currentFilters = {
+            moderated: '',
+            page: '',
+            search: ''
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            loadFeedback();
+
+            // Event listeners
+            document.getElementById('refresh-btn').addEventListener('click', loadFeedback);
+            document.getElementById('status-filter').addEventListener('change', updateFilters);
+            document.getElementById('page-filter').addEventListener('input', updateFilters);
+            document.getElementById('search-filter').addEventListener('input', updateFilters);
+            document.getElementById('settings-form').addEventListener('submit', saveSettings);
+        });
+
+        async function loadSettings() {
+            try {
+                const response = await fetch(`${API_BASE}/api/settings`);
+                const settings = await response.json();
+                document.getElementById('notification-email').value = settings.notifications?.email || '';
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        async function saveSettings(e) {
+            e.preventDefault();
+            const email = document.getElementById('notification-email').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/settings`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        notifications: { email }
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Settings saved successfully!');
+                } else {
+                    throw new Error('Failed to save settings');
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                alert('Failed to save settings. Please try again.');
+            }
+        }
+
+        async function loadFeedback() {
+            showLoading();
+
+            try {
+                const params = new URLSearchParams();
+                if (currentFilters.moderated) params.append('moderated', currentFilters.moderated);
+                if (currentFilters.page) params.append('page', currentFilters.page);
+
+                const response = await fetch(`${API_BASE}/api/feedback?${params}`);
+                const data = await response.json();
+
+                updateStats(data.feedback);
+                renderFeedback(data.feedback);
+
+            } catch (error) {
+                console.error('Error loading feedback:', error);
+                showError('Failed to load feedback. Please check your connection.');
+            }
+        }
+
+        function updateFilters() {
+            currentFilters.moderated = document.getElementById('status-filter').value;
+            currentFilters.page = document.getElementById('page-filter').value;
+            currentFilters.search = document.getElementById('search-filter').value;
+
+            loadFeedback();
+        }
+
+        function updateStats(feedback) {
+            const total = feedback.length;
+            const pending = feedback.filter(f => !f.moderated).length;
+            const moderated = feedback.filter(f => f.moderated).length;
+            const today = feedback.filter(f => {
+                const today = new Date().toDateString();
+                return new Date(f.timestamp).toDateString() === today;
+            }).length;
+
+            document.getElementById('total-feedback').textContent = total;
+            document.getElementById('pending-feedback').textContent = pending;
+            document.getElementById('moderated-feedback').textContent = moderated;
+            document.getElementById('today-feedback').textContent = today;
+        }
+
+        function renderFeedback(feedback) {
+            const container = document.getElementById('feedback-list');
+            const emptyState = document.getElementById('empty-state');
+
+            // Filter by search term
+            if (currentFilters.search) {
+                const searchTerm = currentFilters.search.toLowerCase();
+                feedback = feedback.filter(f =>
+                    f.message.toLowerCase().includes(searchTerm) ||
+                    (f.followUp && f.followUp.toLowerCase().includes(searchTerm)) ||
+                    f.page.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (feedback.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = feedback.map(item => `
+                <div class="feedback-item">
+                    <div class="feedback-header">
+                        <div class="feedback-meta">
+                            <strong>${new Date(item.timestamp).toLocaleString()}</strong>
+                            <span class="status-badge status-${item.archived ? 'archived' : item.moderated ? 'moderated' : 'pending'}">
+                                ${item.archived ? 'Archived' : item.moderated ? 'Moderated' : 'Pending'}
+                            </span>
+                        </div>
+                        <div>
+                            <a href="${item.page}" target="_blank" class="btn btn-primary">View Page</a>
+                        </div>
+                    </div>
+                    <div class="feedback-meta">
+                        Page: ${item.page}
+                    </div>
+                    <div class="feedback-message">${escapeHtml(item.message)}</div>
+                    ${item.followUp ? `<div class="feedback-followup"><strong>Follow-up:</strong> ${escapeHtml(item.followUp)}</div>` : ''}
+                    <div class="feedback-actions">
+                        ${!item.moderated ? `<button class="btn btn-success" onclick="moderateFeedback('${item.id}', true)">Approve</button>` : ''}
+                        ${!item.archived ? `<button class="btn btn-warning" onclick="archiveFeedback('${item.id}', true)">Archive</button>` : ''}
+                        ${item.archived ? `<button class="btn btn-primary" onclick="archiveFeedback('${item.id}', false)">Unarchive</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function moderateFeedback(id, moderated) {
+            try {
+                const response = await fetch(`${API_BASE}/api/feedback/${id}/moderate`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ moderated })
+                });
+
+                if (response.ok) {
+                    loadFeedback();
+                } else {
+                    throw new Error('Failed to moderate feedback');
+                }
+            } catch (error) {
+                console.error('Error moderating feedback:', error);
+                alert('Failed to moderate feedback. Please try again.');
+            }
+        }
+
+        async function archiveFeedback(id, archived) {
+            try {
+                const response = await fetch(`${API_BASE}/api/feedback/${id}/moderate`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ archived })
+                });
+
+                if (response.ok) {
+                    loadFeedback();
+                } else {
+                    throw new Error('Failed to archive feedback');
+                }
+            } catch (error) {
+                console.error('Error archiving feedback:', error);
+                alert('Failed to archive feedback. Please try again.');
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('feedback-list').style.display = 'none';
+            document.getElementById('empty-state').style.display = 'none';
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function showError(message) {
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

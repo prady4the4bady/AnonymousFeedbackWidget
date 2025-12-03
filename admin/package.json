@@ -1,0 +1,16 @@
+{
+  "name": "anonymous-feedback-admin",
+  "version": "1.0.0",
+  "description": "Admin interface for Anonymous Micro Feedback Widget",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s . -l 3003",
+    "dev": "serve -s . -l 3003"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "keywords": ["feedback", "admin", "moderation"],
+  "author": "prady4the4bady",
+  "license": "MIT"
+}

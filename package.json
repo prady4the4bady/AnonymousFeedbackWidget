@@ -1,0 +1,34 @@
+{
+  "name": "anonymous-feedback-widget",
+  "version": "1.0.0",
+  "description": "Anonymous Micro Feedback Widget - Privacy-first feedback collection",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd admin && npm start\"",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../admin && npm install",
+    "build": "cd frontend && npm run build",
+    "test": "cd backend && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prady4the4bady/AnonymousFeedbackWidget.git"
+  },
+  "keywords": [
+    "feedback",
+    "widget",
+    "anonymous",
+    "privacy",
+    "user-feedback",
+    "embeddable"
+  ],
+  "author": "prady4the4bady",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prady4the4bady/AnonymousFeedbackWidget/issues"
+  },
+  "homepage": "https://github.com/prady4the4bady/AnonymousFeedbackWidget#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
