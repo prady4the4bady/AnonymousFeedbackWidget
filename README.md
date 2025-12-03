@@ -4,6 +4,8 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![Feedback](https://img.shields.io/badge/Feedback-Anonymous-orange.svg)](https://github.com/prady4the4bady/AnonymousFeedbackWidget)
 
+**Made by prady**
+
 A privacy-first feedback collection widget that allows users to submit anonymous feedback without any tracking or personal data collection.
 
 ## 📋 Problem

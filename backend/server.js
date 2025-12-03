@@ -3,19 +3,21 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { v4: uuidv4 } = require('uuid');
-const { JSONFile, Low } = require('lowdb');
+const { Low } = require('lowdb');
+const { JSONFile } = require('lowdb/node');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+
+// AnonymousFeedbackWidget - Privacy-First Feedback Collection
+// Made by prady
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 
 // Database setup
+const defaultData = { feedback: [], settings: { notifications: { email: '' } } };
 const adapter = new JSONFile('./db.json');
-const db = new Low(adapter);
-
-// Initialize database
-db.data = db.data || { feedback: [], settings: { notifications: { email: '' } } };
+const db = new Low(adapter, defaultData);
 
 // Middleware
 app.use(helmet());
@@ -224,6 +226,7 @@ async function startServer() {
 
   app.listen(PORT, () => {
     console.log(`Anonymous Feedback API running on port ${PORT}`);
+    console.log(`👨‍💻 Made by prady`);
   });
 }
 
